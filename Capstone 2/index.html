@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SokoRada: Ethical Financial Readiness PWA</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2e7d32">
+  <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' fill='%232e7d32'><rect width='512' height='512' rx='128'/><path d='M256 90 L100 220 L160 220 L160 410 L352 410 L352 220 L412 220 Z' fill='white'/></svg>">
+</head>
+<body>
+
+  <div class="master-container">
+    
+    <!-- Smartphone Frame for SokoRada App -->
+    <div class="phone-frame" id="main-phone">
+      
+      <!-- Top header bar -->
+      <header class="phone-header">
+        <div class="logo-section">
+          <div class="logo-icon">S</div>
+          <div class="logo-text">SokoRada</div>
+        </div>
+        <div class="header-controls">
+          <button class="lang-btn" id="lang-toggle">SWA</button>
+          <div class="user-badge" id="active-user-badge" style="display: none;">
+            <span></span><span id="active-user-name">Grace</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Offline alert bar -->
+      <div class="offline-banner" id="offline-bar">
+        <span class="english-text">Offline Mode Active - Submissions Saved Locally</span>
+        <span class="swahili-text">Hali ya Nje ya Mtandao - Data Imehifadhiwa Kwenye Simu</span>
+      </div>
+
+      <!-- Main scrollable body for active screens -->
+      <main class="phone-body" id="app-body">
+        
+        <!-- SCREEN 1: Welcome & Consent Screen -->
+        <section id="screen-welcome" class="screen active">
+          <div class="agent-banner">
+            <div class="agent-icon">🧭</div>
+            <div class="agent-bubble">
+              <div class="agent-name">Scout Agent</div>
+              <div class="agent-text">
+                <span class="english-text">Hello! I am your SokoRada guide. Let's build a readiness profile that respects your real income flow before you apply to a SACCO.</span>
+                <span class="swahili-text">Habari! Mimi ni mwongozo wako wa SokoRada. Wacha tujenge wasifu wa utayari unaoheshimu mzunguko wako halisi wa mapato kabla ya kutuma maombi kwenye SACCO.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card highlight">
+            <h1 class="english-text">Ethical Financial Support</h1>
+            <h1 class="swahili-text">Msaada wa Kifedha wa Kimaadili</h1>
+            <p class="english-text">SokoRada helps informal traders and farmers prepare better loan applications. This is a support tool, not a system that automatically denies you a loan.</p>
+            <p class="swahili-text">SokoRada inasaidia wafanyabiashara na wakulima kuandaa maombi bora ya mkopo. Hii ni zana ya msaada, si mfumo unaokukataa mkopo kiotomatiki.</p>
+          </div>
+
+          <div class="card">
+            <h2>
+              <span class="english-text">Your Consent & Privacy</span>
+              <span class="swahili-text">Idhini na Faragha Yako</span>
+            </h2>
+            <div style="font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; gap: 8px;">
+              <p class="english-text">1. We collect only what is needed for financial readiness guidance.</p>
+              <p class="swahili-text">1. Tunakusanya tu yale yanayohitajika kwa mwongozo wa utayari wa kifedha.</p>
+              <p class="english-text">2. We never share your data without your selected SACCO choice and explicit request.</p>
+              <p class="swahili-text">2. Hatushiriki data yako kamwe bila chaguo lako la SACCO na ombi lako wazi.</p>
+              <p class="english-text">3. We never use gender, tribe, religion, or protected info for scoring.</p>
+              <p class="swahili-text">3. Hatutumii jinsia, kabila, dini, au habari zilizolindwa kwa tathmini.</p>
+              <p class="english-text">4. You can withdraw consent and delete your profile completely at any time.</p>
+              <p class="swahili-text">4. Unaweza kuondoa idhini na kufuta wasifu wako kabisa wakati wowote.</p>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" id="btn-accept-consent">
+            <span class="english-text">Accept & Proceed</span>
+            <span class="swahili-text">Kubali na Uendelee</span>
+          </button>
+        </section>
+
+        <!-- SCREEN 2: Login & Signup Screen -->
+        <section id="screen-login" class="screen">
+          <h1>
+            <span class="english-text">Get Started</span>
+            <span class="swahili-text">Anza Sasa</span>
+          </h1>
+          <p class="english-text">Create a local profile to begin, or select one of our demo profiles to test the platform immediately.</p>
+          <p class="swahili-text">Fungua wasifu wa ndani ili kuanza, au chagua mmoja wa wasifu wetu wa majaribio ili kupima jukwaa mara moja.</p>
+
+          <div class="card">
+            <h2>
+              <span class="english-text">New Profile</span>
+              <span class="swahili-text">Wasifu Mpya</span>
+            </h2>
+            <div class="form-group">
+              <label class="form-label english-text">Mobile Number</label>
+              <label class="form-label swahili-text">Nambari ya Simu</label>
+              <input type="tel" class="form-input" id="signup-phone" placeholder="e.g. 0712345678">
+            </div>
+            <div class="form-group">
+              <label class="form-label english-text">Your Location</label>
+              <label class="form-label swahili-text">Eneo Lako</label>
+              <input type="text" class="form-input" id="signup-location" placeholder="e.g. Kakamega, Busia">
+            </div>
+            <div class="form-group">
+              <label class="form-label english-text">Primary Occupation</label>
+              <label class="form-label swahili-text">Kazi Yako Kuu</label>
+              <select class="form-select" id="signup-occupation">
+                <option value="farmer">Smallholder Farmer / Mkulima Mdogo</option>
+                <option value="vendor">Market Vendor / Mfanyabiashara wa Soko</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" id="btn-signup-submit">
+              <span class="english-text">Create Account</span>
+              <span class="swahili-text">Fungua Akaunti</span>
+            </button>
+          </div>
+
+          <div class="card accent">
+            <h2>
+              <span class="english-text">Or Pick a Demo Profile (Testing)</span>
+              <span class="swahili-text">Au Chagua Wasifu wa Majaribio</span>
+            </h2>
+            <p style="font-size: 12px; margin-bottom: 6px;">Select a profile to load pre-filled seasonal data and simulated logs:</p>
+            <div class="options-grid" id="demo-profiles-container">
+              <!-- Dynamically populated from mockData.js -->
+            </div>
+          </div>
+        </section>
+
+        <!-- SCREEN 3: User Dashboard -->
+        <section id="screen-dashboard" class="screen">
+          <div class="agent-banner">
+            <div class="agent-icon">🧭</div>
+            <div class="agent-bubble">
+              <div class="agent-name">Scout Agent</div>
+              <div class="agent-text" id="dashboard-agent-text">
+                <span class="english-text">Welcome back! Check your loan readiness below. Completing recommended lessons helps strengthen your profile.</span>
+                <span class="swahili-text">Karibu tena! Angalia utayari wako wa mkopo hapa chini. Kukamilisha mafunzo kunasaidia kuongeza nguvu ya wasifu wako.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Readiness Progress Card -->
+          <div class="card highlight" id="dash-readiness-card">
+            <h2>
+              <span class="english-text">Loan Readiness Check</span>
+              <span class="swahili-text">Tathmini ya Utayari wa Mkopo</span>
+            </h2>
+            <p id="dash-readiness-desc" class="english-text">Answer general questions to understand your borrowing preparedness.</p>
+            <p id="dash-readiness-desc-sw" class="swahili-text">Jibu maswali ya jumla ili kuelewa utayarifu wako wa kukopa.</p>
+            <div class="stat-box" style="margin: 4px 0;">
+              <div class="stat-value" id="dash-readiness-status">Not Started</div>
+              <div class="stat-label english-text">Assessment State</div>
+              <div class="stat-label swahili-text">Hali ya Tathmini</div>
+            </div>
+            <button class="btn btn-primary" id="btn-start-readiness">
+              <span class="english-text">Take Readiness Check</span>
+              <span class="swahili-text">Anza Tathmini</span>
+            </button>
+          </div>
+
+          <!-- Selection of SACCO -->
+          <div class="card" id="dash-sacco-card">
+            <h2>
+              <span class="english-text">Target SACCO Selection</span>
+              <span class="swahili-text">Uchaguzi wa SACCO Lengo</span>
+            </h2>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <p id="dash-selected-sacco" style="font-weight: bold; color: var(--text-main);">None Chosen</p>
+                <p class="text-small english-text">SACCO will receive your readiness briefing.</p>
+                <p class="text-small swahili-text">SACCO itapokea muhtasari wako wa utayari.</p>
+              </div>
+              <button class="btn btn-outline text-small" id="btn-goto-sacco" style="padding: 6px 10px;">
+                <span class="english-text">Change</span>
+                <span class="swahili-text">Badilisha</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Training Progress Card -->
+          <div class="card" id="dash-training-card">
+            <h2>
+              <span class="english-text">Recommended Training</span>
+              <span class="swahili-text">Mafunzo Yanayopendekezwa</span>
+            </h2>
+            <div id="dash-training-progress-info">
+              <!-- Dynamically updated -->
+            </div>
+            <button class="btn btn-outline" id="btn-goto-training">
+              <span class="english-text">Open Learning Hub</span>
+              <span class="swahili-text">Fungua Kituo cha Mafunzo</span>
+            </button>
+          </div>
+
+          <!-- Active Loan Application Card -->
+          <div class="card" id="dash-application-card">
+            <h2>
+              <span class="english-text">Loan-Support Application</span>
+              <span class="swahili-text">Ombi la Msaada wa Mkopo</span>
+            </h2>
+            <p id="dash-app-status-text" class="english-text">Prepare your request details to generate the briefing document.</p>
+            <p id="dash-app-status-text-sw" class="swahili-text">Weka maelezo ya ombi lako ili kuunda wasifu wa afisa wa mikopo.</p>
+            <button class="btn btn-secondary" id="btn-goto-application">
+              <span class="english-text">Fill Application Details</span>
+              <span class="swahili-text">Jaza Maelezo ya Ombi</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- SCREEN 4: SACCO Selection Screen -->
+        <section id="screen-sacco" class="screen">
+          <h1>
+            <span class="english-text">Choose a Participating SACCO</span>
+            <span class="swahili-text">Chagua SACCO Inayoshiriki</span>
+          </h1>
+          <p class="english-text">Select which lending partner you want to prepare an application for. You can change this at any time.</p>
+          <p class="swahili-text">Chagua mshirika wa mikopo unayetaka kumtayarishia ombi. Unaweza kubadilisha hii wakati wowote.</p>
+          
+          <div class="card alert text-small">
+            <span class="english-text">⚠️ Note: Listed institutions are prototype examples. Final availability depends on official local partnerships.</span>
+            <span class="swahili-text">⚠️ Kumbuka: Mashirika yaliyoorodheshwa ni mifano ya majaribio. Upatikanaji wa mwisho unategemea ushirikiano rasmi.</span>
+          </div>
+
+          <div class="options-grid" id="sacco-selection-list">
+            <!-- Dynamically populated from mockData.js -->
+          </div>
+
+          <button class="btn btn-primary" id="btn-save-sacco">
+            <span class="english-text">Confirm & Back to Dashboard</span>
+            <span class="swahili-text">Thibitisha na Urudi Mwanzo</span>
+          </button>
+        </section>
+
+        <!-- SCREEN 5: Loan Readiness and Well-being Check Screen -->
+        <section id="screen-readiness-check" class="screen">
+          <div class="agent-banner">
+            <div class="agent-icon">🧭</div>
+            <div class="agent-bubble">
+              <div class="agent-name">Scout Agent</div>
+              <div class="agent-text">
+                <span class="english-text">This check is a tool to highlight your strengths and guide recommendations. It does not auto-deny you.</span>
+                <span class="swahili-text">Tathmini hii ni zana ya kuonyesha nguvu zako na kuongoza mafunzo. Haikukatai mkopo kiotomatiki.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="readiness-progress-indicator"></div>
+          </div>
+
+          <div class="card" id="quiz-card">
+            <h2 id="quiz-question-title">Question Title</h2>
+            <div class="options-grid" id="quiz-options-container" style="margin-top: 10px;">
+              <!-- Options populated dynamically -->
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-outline" id="btn-quiz-prev">
+              <span class="english-text">Previous</span>
+              <span class="swahili-text">Nyuma</span>
+            </button>
+            <button class="btn btn-primary" id="btn-quiz-next">
+              <span class="english-text">Next</span>
+              <span class="swahili-text">Mbele</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- SCREEN 6: Training Recommendations Screen -->
+        <section id="screen-training" class="screen">
+          <h1>
+            <span class="english-text">Learning & Preparedness Hub</span>
+            <span class="swahili-text">Kituo cha Mafunzo</span>
+          </h1>
+          <p class="english-text">Complete interactive mini-learning sessions tailored to your responses. These strengthen your preparation and the SACCO briefing.</p>
+          <p class="swahili-text">Kamilisha masomo mafupi ya mwingiliano yaliyolengwa kulingana na majibu yako. Masomo haya yanaimarisha utayarifu wako na muhtasari wa SACCO.</p>
+
+          <div class="options-grid" id="training-modules-list">
+            <!-- Dynamically populated -->
+          </div>
+
+          <!-- Micro-Learning Slide Viewer overlay modal inside frame -->
+          <div class="card highlight" id="training-slideshow-container" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <h2 id="training-active-title">Module Title</h2>
+              <button class="btn-text" id="btn-close-slideshow" style="color: var(--secondary-color);">Close</button>
+            </div>
+            <div class="training-slide" id="training-slide-content">
+              Slide content...
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar" id="training-slide-progress" style="width: 33%"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+              <button class="btn btn-outline text-small" id="btn-slide-prev" style="padding: 6px 12px;">Back</button>
+              <span id="training-slide-number" style="font-size: 12px; font-weight: bold;">Slide 1 / 3</span>
+              <button class="btn btn-primary text-small" id="btn-slide-next" style="padding: 6px 12px;">Next</button>
+            </div>
+          </div>
+
+          <button class="btn btn-outline" id="btn-training-back-dash">
+            <span class="english-text">Back to Dashboard</span>
+            <span class="swahili-text">Rudi Kwenye Eneo la Kazi</span>
+          </button>
+        </section>
+
+        <!-- SCREEN 7: Loan-Support Application Screen -->
+        <section id="screen-loan-app" class="screen">
+          <h1>
+            <span class="english-text">Loan Application Support</span>
+            <span class="swahili-text">Msaada wa Ombi la Mkopo</span>
+          </h1>
+          
+          <div class="card highlight">
+            <div class="form-group">
+              <label class="form-label english-text">Requested Loan Amount (KES)</label>
+              <label class="form-label swahili-text">Kiasi cha Mkopo Unachotaka (KES)</label>
+              <input type="number" class="form-input" id="loan-amount" placeholder="e.g. 20000" min="1000">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label english-text">Loan Type</label>
+              <label class="form-label swahili-text">Aina ya Mkopo</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" class="form-input" id="loan-type-display" readonly placeholder="Tap button to choose...">
+                <button class="btn btn-outline" id="btn-select-loan-type" style="padding: 10px;">Choose</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label english-text">Primary Income Source</label>
+              <label class="form-label swahili-text">Chanzo Kikuu cha Mapato</label>
+              <input type="text" class="form-input" id="loan-income-source" placeholder="e.g. Maize farming, Retail shop">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label english-text">Expected Income Cycle</label>
+              <label class="form-label swahili-text">Mzunguko wa Mapato</label>
+              <select class="form-select" id="loan-income-cycle">
+                <option value="daily">Daily / Kila siku</option>
+                <option value="weekly">Weekly / Kila wiki</option>
+                <option value="monthly">Monthly / Kila mwezi</option>
+                <option value="seasonal">Seasonal (harvests) / Kila msimu (mavuno)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label english-text">Preferred Repayment Plan</label>
+              <label class="form-label swahili-text">Mpangilio Upendao wa Malipo</label>
+              <select class="form-select" id="loan-repayment-timing">
+                <option value="weekly">Weekly Payments / Malipo ya Kila Wiki</option>
+                <option value="monthly">Monthly Payments / Malipo ya Kila Mwezi</option>
+                <option value="seasonal">Seasonal Lump sums / Malipo ya Msimu</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label english-text">Current Savings / Chama Shares (KES)</label>
+              <label class="form-label swahili-text">Akiba ya Sasa / Hisa za Chama (KES)</label>
+              <input type="number" class="form-input" id="loan-savings" placeholder="e.g. 5000">
+            </div>
+          </div>
+
+          <!-- Document upload simulation -->
+          <div class="card">
+            <h2>
+              <span class="english-text">Support Records (Optional)</span>
+              <span class="swahili-text">Kumbukumbu za Msaada (Hiari)</span>
+            </h2>
+            <p class="english-text">Upload pictures of receipts, sales books, or harvest cards. This helps verify your cash flow and builds credit trust.</p>
+            <p class="swahili-text">Pakia picha za risiti, vitabu vya mauzo, au kadi za mavuno. Hii inasaidia kuthibitisha mtiririko wako wa fedha na kujenga uaminifu.</p>
+            
+            <div class="upload-dropzone" id="document-dropzone">
+              <span class="english-text">📷 Tap to Upload Photo of sales record book</span>
+              <span class="swahili-text">📷 Gusa ili Upakie Picha ya daftari la mauzo</span>
+            </div>
+            
+            <div class="upload-preview-list" id="uploaded-files-container">
+              <!-- Uploaded mocks -->
+            </div>
+          </div>
+
+          <!-- Loan Officer Contact Option before submission -->
+          <div class="card accent">
+            <div class="option-card" id="card-pref-speak-officer">
+              <div class="option-checkbox" id="check-pref-speak-officer"></div>
+              <div>
+                <strong class="english-text">Request human officer check before review</strong>
+                <strong class="swahili-text">Omba ukaguzi wa afisa kabla ya kuwasilisha</strong>
+                <p class="text-small english-text" style="margin-top: 2px;">Checking this alerts the loan officer that you'd like a call to clarify your application terms. Asking for support does not affect loan scoring negatively.</p>
+                <p class="text-small swahili-text" style="margin-top: 2px;">Kuweka alama hii kunamuarifu afisa kuwa ungependa kupigiwa simu ili ufafanue masharti. Kuomba msaada hakuathiri tathmini vibaya.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-outline" id="btn-loan-app-cancel">Cancel</button>
+            <button class="btn btn-primary" id="btn-loan-app-submit">
+              <span class="english-text">Generate Readiness Summary</span>
+              <span class="swahili-text">Tengeneza Muhtasari wa Utayari</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- SCREEN 8: Loan Type Selection Screen -->
+        <section id="screen-loan-type" class="screen">
+          <h1>
+            <span class="english-text">Select Loan Purpose</span>
+            <span class="swahili-text">Chagua Lengo la Mkopo</span>
+          </h1>
+          <p class="english-text">Choose the category that best matches how you intend to use the funds.</p>
+          <p class="swahili-text">Chagua kategoria inayolingana vyema na jinsi unavyokusudia kutumia fedha.</p>
+
+          <div class="options-grid" id="loan-type-selection-list">
+            <!-- Dynamically populated from mockData.js -->
+          </div>
+
+          <button class="btn btn-outline" id="btn-loan-type-back">
+            <span class="english-text">Cancel Selection</span>
+            <span class="swahili-text">Ghairi Uchaguzi</span>
+          </button>
+        </section>
+
+        <!-- SCREEN 9: Repayment Schedule Suggestion Screen -->
+        <section id="screen-repayment" class="screen">
+          <div class="agent-banner">
+            <div class="agent-icon">🛡️</div>
+            <div class="agent-bubble">
+              <div class="agent-name">Guardian Agent</div>
+              <div class="agent-text" id="repayment-guardian-text">
+                <span class="english-text">I have reviewed your income patterns. Since you earn seasonal harvest revenue, equal monthly repayments can be difficult. Here is our proposed plan.</span>
+                <span class="swahili-text">Nimepitia mifumo yako ya mapato. Kwa kuwa unapata mapato ya msimu wa mavuno, malipo sawa ya kila mwezi yanaweza kuwa magumu. Hapa kuna mpango uliopendekezwa.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card highlight">
+            <h2>
+              <span class="english-text">Proposed Ethical Repayment Schedule</span>
+              <span class="swahili-text">Mpangilio wa Malipo wa Kimaadili</span>
+            </h2>
+            <div id="suggested-schedule-comparison">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>
+              <span class="english-text">Comparison Table</span>
+              <span class="swahili-text">Jedwali la Ulinganifu</span>
+            </h2>
+            <div style="font-size: 13px;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <thead>
+                  <tr style="border-bottom: 2px solid var(--border-color);">
+                    <th style="padding: 6px;">Plan</th>
+                    <th style="padding: 6px;">Payment Cycle</th>
+                    <th style="padding: 6px;">Risk of Default</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--border-color);">
+                    <td style="padding: 6px; font-weight: bold; color: var(--secondary-color);">Standard Bank</td>
+                    <td style="padding: 6px;">Equal Monthly</td>
+                    <td style="padding: 6px; color: var(--secondary-color);">High (dry months)</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 6px; font-weight: bold; color: var(--primary-color);">SokoRada suggestion</td>
+                    <td style="padding: 6px;" id="repayment-suggested-cycle">Seasonal harvest alignment</td>
+                    <td style="padding: 6px; color: var(--primary-color);">Low (aligned to yield)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <button class="btn btn-primary" id="btn-repayment-confirm">
+            <span class="english-text">Proceed to Final Summary</span>
+            <span class="swahili-text">Endelea Kwenye Muhtasari wa Mwisho</span>
+          </button>
+        </section>
+
+        <!-- SCREEN 10: Talk to a Loan Officer / Request Support Screen -->
+        <section id="screen-officer-contact" class="screen">
+          <div class="agent-banner">
+            <div class="agent-icon">🏹</div>
+            <div class="agent-bubble">
+              <div class="agent-name">Hunter Agent</div>
+              <div class="agent-text">
+                <span class="english-text">I will coordinate your request with the SACCO officer. Asking for human-in-the-loop support is treated as a positive sign of responsibility.</span>
+                <span class="swahili-text">Nitaratibu ombi lako na afisa wa SACCO. Kuomba usaidizi wa kibinadamu huchukuliwa kama ishara chanya ya uwajibikaji.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card highlight">
+            <h2>
+              <span class="english-text">Request Human Officer Consultation</span>
+              <span class="swahili-text">Omba Ushauri wa Afisa wa Mikopo</span>
+            </h2>
+            
+            <div class="form-group">
+              <label class="form-label english-text">Reason for Contact</label>
+              <label class="form-label swahili-text">Sababu ya Kuwasiliana</label>
+              <select class="form-select" id="officer-support-category">
+                <option value="repayment_schedule">Help choosing/adjusting repayment schedule / Kurekebisha mpango wa malipo</option>
+                <option value="low_readiness">Understand readiness recommendations / Kuelewa mapendekezo ya utayari</option>
+                <option value="records_doc">Help uploading/documenting income records / Msaada wa kumbukumbu za mapato</option>
+                <option value="sacco_change">Help choosing or changing SACCO selection / Kuchagua au kubadilisha SACCO</option>
+                <option value="human_review">Request early manual review of files / Omba ukaguzi wa mapema wa faili</option>
+                <option value="loan_choice">Help selecting the correct loan type / Msaada wa kuchagua aina ya mkopo</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label english-text">Write your question or request detail (Swahili/English)</label>
+              <label class="form-label swahili-text">Andika swali lako au maelezo ya ombi lako</label>
+              <textarea class="form-textarea" id="officer-support-text" placeholder="e.g. My harvest is in August, can we pay the first principal then?"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label english-text">Preferred Response Channel</label>
+              <label class="form-label swahili-text">Njia Upendayo ya Kujibiwa</label>
+              <select class="form-select" id="officer-support-channel">
+                <option value="call">Request a Call Back (Mobile Call) / Nipigie Simu</option>
+                <option value="sms">Receive SMS Text Answers / Ujumbe wa Kawaida (SMS)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Sending animation simulator -->
+          <div class="card" id="officer-sending-modal" style="display: none; text-align: center; border-color: var(--primary-color);">
+            <p style="font-weight: bold; color: var(--primary-color); margin-bottom: 6px;">Routing Message via Hunter Agent...</p>
+            <div class="progress-bar-container">
+              <div class="progress-bar" id="officer-sending-progress" style="width: 0%"></div>
+            </div>
+            <p style="font-size: 11px; margin-top: 6px;">Logging consent check & registering callback in officer database...</p>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-outline" id="btn-officer-back">Cancel</button>
+            <button class="btn btn-primary" id="btn-officer-submit">
+              <span class="english-text">Send Request</span>
+              <span class="swahili-text">Tuma Ombi</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- SCREEN 11: User Feedback Summary Screen -->
+        <section id="screen-feedback-summary" class="screen">
+          <h1>
+            <span class="english-text">Loan Readiness Summary</span>
+            <span class="swahili-text">Muhtasari wa Utayari wa Mkopo</span>
+          </h1>
+          <p class="english-text">Review your final readiness file. You can save this profile, continue training, or request review from your chosen SACCO.</p>
+          <p class="swahili-text">Kagua wasifu wako wa utayari. Unaweza kuhifadhi wasifu huu, kuendelea na mafunzo, au kuomba ukaguzi kutoka kwa SACCO uliyochagua.</p>
+
+          <div class="card highlight" id="summary-strengths-card">
+            <h2>
+              <span class="english-text">Readiness Strengths</span>
+              <span class="swahili-text">Nguvu za Wasifu Wako</span>
+            </h2>
+            <ul id="summary-strengths-list" style="font-size: 13px; padding-left: 18px; display: flex; flex-direction: column; gap: 6px;">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
+
+          <div class="card accent" id="summary-details-card">
+            <h2>
+              <span class="english-text">Application Details</span>
+              <span class="swahili-text">Maelezo ya Ombi</span>
+            </h2>
+            <div style="font-size: 13px; display: flex; flex-direction: column; gap: 4px;" id="summary-details-content">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <div class="card" id="summary-actions-card">
+            <h2>
+              <span class="english-text">Suggested Next Steps</span>
+              <span class="swahili-text">Hatua Zinazofuata</span>
+            </h2>
+            <div id="summary-suggestions-box" style="font-size: 13px; line-height: 1.4; display: flex; flex-direction: column; gap: 8px;">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="btn btn-outline" id="btn-summary-save-later">
+              <span class="english-text">Save & Exit</span>
+              <span class="swahili-text">Hifadhi na Uondoke</span>
+            </button>
+            <button class="btn btn-primary" id="btn-summary-submit-briefing">
+              <span class="english-text">Share Briefing with SACCO</span>
+              <span class="swahili-text">Shiriki na SACCO</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- SCREEN 12: Progress After Training Screen -->
+        <section id="screen-training-progress" class="screen">
+          <div class="agent-banner">
+            <div class="agent-icon">🛡️</div>
+            <div class="agent-bubble">
+              <div class="agent-name">Guardian Agent</div>
+              <div class="agent-text">
+                <span class="english-text">Excellent! By completing training, you have strengthened your readiness score and demonstrated commitment to the loan officer.</span>
+                <span class="swahili-text">Vyema sana! Kwa kukamilisha mafunzo, umeimarisha utayari wako na kuonyesha uwajibikaji mkubwa kwa afisa wa mikopo.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card highlight" style="text-align: center;">
+            <h1 style="color: var(--primary-color); font-size: 26px;">100% Complete</h1>
+            <p class="english-text">Active training recommendations have been fully reviewed!</p>
+            <p class="swahili-text">Mafunzo yote yaliyopendekezwa yamekamilika kikamilifu!</p>
+          </div>
+
+          <div class="card">
+            <h2>
+              <span class="english-text">Briefing Updates</span>
+              <span class="swahili-text">Marekebisho ya Muhtasari</span>
+            </h2>
+            <p class="text-small english-text">The following entry has been added to your official SACCO officer briefing: <strong>"Completed SokoRada Financial Literacy Modules: Budgeting & Harvest-cycle Repayments."</strong> This removes the need for standard budgeting flags.</p>
+            <p class="text-small swahili-text">Kumbukumbu hii imeongezwa kwenye wasifu wako wa SACCO: <strong>"Alikamilisha Mafunzo ya SokoRada ya Bajeti na Malipo ya Mavuno."</strong> Hii huondoa vikwazo vya kawaida vya bajeti.</p>
+          </div>
+
+          <button class="btn btn-primary" id="btn-training-progress-done">
+            <span class="english-text">Back to Dashboard</span>
+            <span class="swahili-text">Rudi Kwenye Eneo la Kazi</span>
+          </button>
+        </section>
+
+        <!-- SCREEN 13: Settings & Consent Management Screen -->
+        <section id="screen-settings" class="screen">
+          <h1>
+            <span class="english-text">Profile Settings & Consent</span>
+            <span class="swahili-text">Mipangilio na Usimamizi wa Idhini</span>
+          </h1>
+          <p class="english-text">Manage your data permissions, change languages, or wipe your profile data completely.</p>
+          <p class="swahili-text">Dhibiti ruhusa za data yako, badilisha lugha, au futa kabisa wasifu wako.</p>
+
+          <div class="card">
+            <h2>
+              <span class="english-text">Active Consents</span>
+              <span class="swahili-text">Idhini Zinazotumika</span>
+            </h2>
+            
+            <div class="form-group" style="flex-direction: row; align-items: center; gap: 10px;">
+              <input type="checkbox" id="consent-sharing-check" checked style="width: 18px; height: 18px;">
+              <label for="consent-sharing-check" class="text-small">
+                <span class="english-text">Allow SokoRada to share readiness briefing with selected SACCO officers.</span>
+                <span class="swahili-text">Ruhusu SokoRada kushiriki muhtasari wa utayari na maafisa wa SACCO walioteuliwa.</span>
+              </label>
+            </div>
+
+            <div class="form-group" style="flex-direction: row; align-items: center; gap: 10px;">
+              <input type="checkbox" id="consent-reminders-check" checked style="width: 18px; height: 18px;">
+              <label for="consent-reminders-check" class="text-small">
+                <span class="english-text">Allow Scout Agent to send up to three helpful training reminders per day.</span>
+                <span class="swahili-text">Ruhusu Scout Agent kutuma vikumbusho vya mafunzo hadi mara tatu kwa siku.</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>
+              <span class="english-text">Backend API Settings</span>
+              <span class="swahili-text">Mipangilio ya API ya Render</span>
+            </h2>
+            <div class="form-group" style="flex-direction: row; align-items: center; gap: 10px;">
+              <input type="checkbox" id="settings-backend-toggle" style="width: 18px; height: 18px;">
+              <label for="settings-backend-toggle" class="text-small">
+                <span class="english-text">Sync with Render backend database.</span>
+                <span class="swahili-text">Landanisha na hifadhidata ya Render.</span>
+              </label>
+            </div>
+            <div class="form-group" id="settings-backend-url-container" style="display: none;">
+              <label class="form-label english-text">Render API URL</label>
+              <label class="form-label swahili-text">URL ya API ya Render</label>
+              <input type="url" class="form-input" id="settings-backend-url" placeholder="e.g. https://sokorada-backend.onrender.com">
+            </div>
+          </div>
+
+          <div class="card">
+            <h2>
+              <span class="english-text">Export Profile</span>
+              <span class="swahili-text">Pakua Wasifu</span>
+            </h2>
+            <button class="btn btn-outline text-small" id="btn-export-profile-data">
+              <span class="english-text">Download JSON Data Summary</span>
+              <span class="swahili-text">Pakua Muhtasari wa Data (JSON)</span>
+            </button>
+          </div>
+
+          <div class="card alert" style="border-left-color: var(--secondary-color);">
+            <h2>
+              <span class="english-text">Danger Zone</span>
+              <span class="swahili-text">Eneo la Hatari</span>
+            </h2>
+            <p class="text-small english-text">Withdrawing consent deletes your local profile, wipes the localStorage cache, and clears active officer briefs immediately.</p>
+            <p class="text-small swahili-text">Kufuta wasifu kunafuta kabisa kumbukumbu zote za ndani na ripoti za maafisa wa mikopo mara moja.</p>
+            <button class="btn btn-secondary" id="btn-delete-profile" style="background-color: var(--secondary-color);">
+              <span class="english-text">Withdraw Consent & Delete Profile</span>
+              <span class="swahili-text">Ondoa Idhini na Futa Wasifu</span>
+            </button>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Bottom Nav Bar -->
+      <footer class="phone-nav" id="bottom-nav" style="display: none;">
+        <button class="nav-item active" id="nav-dash" onclick="app.router.navigate('dashboard')">
+          <span class="nav-icon">📊</span>
+          <span class="english-text">Dashboard</span>
+          <span class="swahili-text">Mwanzo</span>
+        </button>
+        <button class="nav-item" id="nav-readiness" onclick="app.router.navigate('readiness-check')">
+          <span class="nav-icon">🧭</span>
+          <span class="english-text">Readiness</span>
+          <span class="swahili-text">Utayari</span>
+        </button>
+        <button class="nav-item" id="nav-help" onclick="app.router.navigate('officer-contact')">
+          <span class="nav-icon">📞</span>
+          <span class="english-text">Get Help</span>
+          <span class="swahili-text">Msaada</span>
+        </button>
+        <button class="nav-item" id="nav-settings" onclick="app.router.navigate('settings')">
+          <span class="nav-icon">⚙️</span>
+          <span class="english-text">Settings</span>
+          <span class="swahili-text">Mipangilio</span>
+        </button>
+      </footer>
+
+    </div>
+
+    <!-- Developer Diagnostic Panel and USSD Simulator -->
+    <div class="developer-workspace" id="dev-sidebar">
+      
+      <div class="dev-section-title">
+        <span>🛠️ Developer testing workspace</span>
+        <button class="lang-btn" id="toggle-ussd-btn" style="background-color:#3e2723; color:#fff; border-color:#8d6e63;">Hide USSD Sim</button>
+      </div>
+
+      <!-- Simulated USSD Interface -->
+      <div id="ussd-sim-container">
+        <h3 style="font-size: 13px; color:#5d4037; font-weight:bold; margin-bottom: 6px;">USSD *384*4# Feature Phone Simulator</h3>
+        <div class="ussd-wrapper">
+          <div class="ussd-screen" id="ussd-screen-text">
+            SokoRada - Karibu/Welcome
+            1. English
+            2. Kiswahili
+          </div>
+          <div class="ussd-input-row">
+            <span>&gt;</span>
+            <input type="text" class="ussd-input" id="ussd-user-input" placeholder="Enter option...">
+            <button class="ussd-btn" id="btn-ussd-submit">Send</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Diagnostic: active briefing packet generated -->
+      <div>
+        <h3 style="font-size:14px; font-weight:bold; margin-bottom:6px; color:#4e342e;">🏹 Hunter Agent: SACCO Officer Briefing Packet</h3>
+        <div class="card" style="font-family: monospace; font-size:12px; background-color:#faf9f5; border:1px solid #d7ccc8; max-height: 250px; overflow-y: auto;">
+          <pre id="dev-officer-briefing" style="white-space: pre-wrap;">Select a profile or fill out an application to view the briefing packet generated for the SACCO.</pre>
+        </div>
+      </div>
+
+      <!-- Diagnostic: human review flags & active support requests -->
+      <div>
+        <h3 style="font-size:14px; font-weight:bold; margin-bottom:6px; color:#4e342e;">🛡️ Guardian Triage: Human Review Queue</h3>
+        <div class="admin-list" id="dev-human-review-queue">
+          <!-- Populated from local storage queries -->
+        </div>
+      </div>
+
+      <!-- Diagnostic: bias comparison and fairness logs -->
+      <div>
+        <h3 style="font-size:14px; font-weight:bold; margin-bottom:6px; color:#4e342e;">⚖️ Fairness & Bias Watchdogs</h3>
+        <div class="card" style="background-color:#efebe9; border: 1px solid #d7ccc8;">
+          <div style="font-size:12px; display:flex; flex-direction:column; gap:8px;" id="dev-bias-alerts">
+            <!-- Populated -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Diagnostic: audit logs -->
+      <div>
+        <h3 style="font-size:14px; font-weight:bold; margin-bottom:6px; color:#4e342e;">📋 Session Activity & Consent Audit Log</h3>
+        <div class="card" style="max-height: 200px; overflow-y: auto; background-color:#fff;">
+          <div class="admin-list" id="dev-audit-logs">
+            <!-- Populated -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Mobile Dev workspace toggler button -->
+  <button class="mobile-dev-toggle" id="mobile-dev-toggle-btn" style="display: none;">🛠️</button>
+
+  <script src="mockData.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
