@@ -40,13 +40,12 @@ body {
   padding: 20px;
 }
 
-/* Master Layout Grid */
+/* Master Layout Container */
 .master-container {
-  display: grid;
-  grid-template-columns: 430px 1fr;
-  gap: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  max-width: 1280px;
   margin: 0 auto;
 }
 
@@ -192,7 +191,19 @@ body {
 }
 
 .nav-icon {
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+}
+
+.nav-icon svg {
+  stroke: var(--text-muted);
+  transition: var(--transition);
+}
+
+.nav-item.active .nav-icon svg {
+  stroke: var(--primary-color);
 }
 
 /* Universal Elements and Typography */

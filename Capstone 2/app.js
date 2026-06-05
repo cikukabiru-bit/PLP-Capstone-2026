@@ -100,8 +100,17 @@ class SokoRadaApp {
     this.renderLoanTypeList();
     this.updateLanguageUI();
     
-    // Default route
-    if (this.state.activeUser) {
+    // Default route with URL Hash Monitoring for /debug route
+    const handleHashRoute = () => {
+      if (window.location.hash === "#debug") {
+        this.router.navigate("debug");
+      }
+    };
+    window.addEventListener("hashchange", handleHashRoute);
+
+    if (window.location.hash === "#debug") {
+      this.router.navigate("debug");
+    } else if (this.state.activeUser) {
       this.router.navigate("dashboard");
     } else {
       this.router.navigate("welcome");
@@ -377,7 +386,17 @@ class SokoRadaApp {
         this.saveUser();
       }
     });
+    // Developer Debug Screen Routing
+    const devBtn = document.getElementById("btn-goto-debug");
+    if (devBtn) {
+      devBtn.addEventListener("click", () => {
+        this.router.navigate("debug");
+      });
+    }
 
+    document.getElementById("btn-debug-back").addEventListener("click", () => {
+      this.router.navigate("settings");
+    });
     // Quiz Navigation
     document.getElementById("btn-quiz-prev").addEventListener("click", () => {
       if (this.state.currentQuizIndex > 0) {
@@ -609,17 +628,7 @@ class SokoRadaApp {
       this.router.navigate("dashboard");
     });
 
-    // Developer View controls
-    document.getElementById("toggle-ussd-btn").addEventListener("click", (e) => {
-      const panel = document.getElementById("ussd-sim-container");
-      if (panel.style.display === "none") {
-        panel.style.display = "block";
-        e.target.innerText = "Hide USSD Sim";
-      } else {
-        panel.style.display = "none";
-        e.target.innerText = "Show USSD Sim";
-      }
-    });
+
 
     // USSD buttons
     document.getElementById("btn-ussd-submit").addEventListener("click", () => {
@@ -647,24 +656,7 @@ class SokoRadaApp {
       this.router.navigate("loan-app");
     });
 
-    // Mobile Developer Toggler
-    const mobDev = document.getElementById("mobile-dev-toggle-btn");
-    mobDev.addEventListener("click", () => {
-      const devPanel = document.getElementById("dev-sidebar");
-      devPanel.classList.toggle("mobile-active");
-    });
-    // show if window is small
-    if (window.innerWidth <= 800) {
-      mobDev.style.display = "flex";
-    }
-    window.addEventListener("resize", () => {
-      if (window.innerWidth <= 800) {
-        mobDev.style.display = "flex";
-      } else {
-        mobDev.style.display = "none";
-        document.getElementById("dev-sidebar").classList.remove("mobile-active");
-      }
-    });
+
   }
 
   // Router System
@@ -1073,10 +1065,10 @@ class SokoRadaApp {
       div.style.padding = "10px";
       div.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px;">
-          <strong>📄 ${f.name} (${f.size})</strong>
+          <strong>File: ${f.name} (${f.size})</strong>
           <button class="btn-text" style="color:var(--secondary-color); padding:0;" onclick="app.removeFile(${idx})">Delete</button>
         </div>
-        <p class="text-small" style="color:#2e7d32; font-weight:600; margin-top:4px;">🔍 ${f.ocr}</p>
+        <p class="text-small" style="color:#2e7d32; font-weight:600; margin-top:4px;">OCR: ${f.ocr}</p>
       `;
       container.appendChild(div);
     });
@@ -1221,7 +1213,7 @@ class SokoRadaApp {
       const p = document.createElement("p");
       p.style.color = "var(--secondary-color)";
       p.style.fontWeight = "bold";
-      p.innerText = this.state.lang === "en" ? "💡 Action Items to strengthen application:" : "💡 Mapendekezo ya kuimarisha ombi lako:";
+      p.innerText = this.state.lang === "en" ? "Action Items to strengthen application:" : "Mapendekezo ya kuimarisha ombi lako:";
       sugBox.appendChild(p);
 
       unfinished.forEach(u => {
@@ -1234,7 +1226,7 @@ class SokoRadaApp {
       const p = document.createElement("p");
       p.style.color = "var(--primary-color)";
       p.style.fontWeight = "bold";
-      p.innerText = this.state.lang === "en" ? "🎉 Excellent Work! All readiness prep recommended is completed!" : "🎉 Kazi nzuri! Masomo yote ya maandalizi ya utayari yamekamilika!";
+      p.innerText = this.state.lang === "en" ? "Excellent Work! All readiness prep recommended is completed!" : "Kazi nzuri! Masomo yote ya maandalizi ya utayari yamekamilika!";
       sugBox.appendChild(p);
     }
   }
@@ -1333,7 +1325,7 @@ class SokoRadaApp {
             let reason = u.supportRequested ? `Callback request: ${u.supportCategory}` : "Triage trigger flagged";
             div.innerHTML = `
               <div class="admin-item-header">
-                <strong>👤 ${u.name} (${u.location})</strong>
+                <strong>${u.name} (${u.location})</strong>
                 <span class="badge-warning">Flagged</span>
               </div>
               <p style="font-size:11px; margin-top:2px;">
@@ -1362,7 +1354,7 @@ class SokoRadaApp {
             div.style.margin = "0";
             div.innerHTML = `
               <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:bold;">
-                <span>⚖️ ${alert.category}</span>
+                <span>${alert.category}</span>
                 <span style="text-transform:uppercase; color:${alert.severity === "warning" ? "var(--secondary-color)" : "var(--primary-color)"};">${alert.severity}</span>
               </div>
               <p style="font-size:11.5px; margin-top:2px; color:var(--text-main);">${alert.description}</p>
@@ -1482,7 +1474,7 @@ GUARDIAN LENDING RECOMMENDATIONS:
 
         div.innerHTML = `
           <div class="admin-item-header">
-            <strong>👤 ${u.name} (${u.location})</strong>
+            <strong>${u.name} (${u.location})</strong>
             <span class="badge-warning">Flagged</span>
           </div>
           <p style="font-size:11px; margin-top:2px;">
@@ -1509,7 +1501,7 @@ GUARDIAN LENDING RECOMMENDATIONS:
       div.style.margin = "0";
       div.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; font-weight:bold;">
-          <span>⚖️ ${alert.category}</span>
+          <span>${alert.category}</span>
           <span style="text-transform:uppercase; color:${alert.severity === "warning" ? "var(--secondary-color)" : "var(--primary-color)"};">${alert.severity}</span>
         </div>
         <p style="font-size:11.5px; margin-top:2px; color:var(--text-main);">${alert.description}</p>

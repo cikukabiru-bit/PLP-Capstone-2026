@@ -42,7 +42,7 @@
         <!-- SCREEN 1: Welcome & Consent Screen -->
         <section id="screen-welcome" class="screen active">
           <div class="agent-banner">
-            <div class="agent-icon">🧭</div>
+            <div class="agent-icon">S</div>
             <div class="agent-bubble">
               <div class="agent-name">Scout Agent</div>
               <div class="agent-text">
@@ -135,7 +135,7 @@
         <!-- SCREEN 3: User Dashboard -->
         <section id="screen-dashboard" class="screen">
           <div class="agent-banner">
-            <div class="agent-icon">🧭</div>
+            <div class="agent-icon">S</div>
             <div class="agent-bubble">
               <div class="agent-name">Scout Agent</div>
               <div class="agent-text" id="dashboard-agent-text">
@@ -223,8 +223,8 @@
           <p class="swahili-text">Chagua mshirika wa mikopo unayetaka kumtayarishia ombi. Unaweza kubadilisha hii wakati wowote.</p>
           
           <div class="card alert text-small">
-            <span class="english-text">⚠️ Note: Listed institutions are prototype examples. Final availability depends on official local partnerships.</span>
-            <span class="swahili-text">⚠️ Kumbuka: Mashirika yaliyoorodheshwa ni mifano ya majaribio. Upatikanaji wa mwisho unategemea ushirikiano rasmi.</span>
+            <span class="english-text">Note: Listed institutions are prototype examples. Final availability depends on official local partnerships.</span>
+            <span class="swahili-text">Kumbuka: Mashirika yaliyoorodheshwa ni mifano ya majaribio. Upatikanaji wa mwisho unategemea ushirikiano rasmi.</span>
           </div>
 
           <div class="options-grid" id="sacco-selection-list">
@@ -240,7 +240,7 @@
         <!-- SCREEN 5: Loan Readiness and Well-being Check Screen -->
         <section id="screen-readiness-check" class="screen">
           <div class="agent-banner">
-            <div class="agent-icon">🧭</div>
+            <div class="agent-icon">S</div>
             <div class="agent-bubble">
               <div class="agent-name">Scout Agent</div>
               <div class="agent-text">
@@ -378,8 +378,8 @@
             <p class="swahili-text">Pakia picha za risiti, vitabu vya mauzo, au kadi za mavuno. Hii inasaidia kuthibitisha mtiririko wako wa fedha na kujenga uaminifu.</p>
             
             <div class="upload-dropzone" id="document-dropzone">
-              <span class="english-text">📷 Tap to Upload Photo of sales record book</span>
-              <span class="swahili-text">📷 Gusa ili Upakie Picha ya daftari la mauzo</span>
+              <span class="english-text">Tap to Upload Photo of sales record book</span>
+              <span class="swahili-text">Gusa ili Upakie Picha ya daftari la mauzo</span>
             </div>
             
             <div class="upload-preview-list" id="uploaded-files-container">
@@ -431,7 +431,7 @@
         <!-- SCREEN 9: Repayment Schedule Suggestion Screen -->
         <section id="screen-repayment" class="screen">
           <div class="agent-banner">
-            <div class="agent-icon">🛡️</div>
+            <div class="agent-icon">G</div>
             <div class="agent-bubble">
               <div class="agent-name">Guardian Agent</div>
               <div class="agent-text" id="repayment-guardian-text">
@@ -490,7 +490,7 @@
         <!-- SCREEN 10: Talk to a Loan Officer / Request Support Screen -->
         <section id="screen-officer-contact" class="screen">
           <div class="agent-banner">
-            <div class="agent-icon">🏹</div>
+            <div class="agent-icon">H</div>
             <div class="agent-bubble">
               <div class="agent-name">Hunter Agent</div>
               <div class="agent-text">
@@ -607,7 +607,7 @@
         <!-- SCREEN 12: Progress After Training Screen -->
         <section id="screen-training-progress" class="screen">
           <div class="agent-banner">
-            <div class="agent-icon">🛡️</div>
+            <div class="agent-icon">G</div>
             <div class="agent-bubble">
               <div class="agent-name">Guardian Agent</div>
               <div class="agent-text">
@@ -711,7 +711,72 @@
               <span class="english-text">Withdraw Consent & Delete Profile</span>
               <span class="swahili-text">Ondoa Idhini na Futa Wasifu</span>
             </button>
+            <!-- Developer Admin Panel link removed from Settings screen to hide it from borrower view. Accessible via #debug route. -->
           </div>
+          </div>
+        </section>
+
+        <!-- SCREEN 14: Hidden Developer Debug Console -->
+        <section id="screen-debug" class="screen">
+          <div class="dev-section-title">
+            <span>Developer & Admin Console</span>
+          </div>
+
+          <!-- USSD Simulator Widget -->
+          <div class="card" id="ussd-sim-container">
+            <h2>USSD *384*4# Feature Phone Simulator</h2>
+            <div class="ussd-wrapper" style="max-width: 100%; width: 100%;">
+              <div class="ussd-screen" id="ussd-screen-text">
+                SokoRada - Karibu/Welcome
+                1. English
+                2. Kiswahili
+              </div>
+              <div class="ussd-input-row">
+                <span>&gt;</span>
+                <input type="text" class="ussd-input" id="ussd-user-input" placeholder="Enter option...">
+                <button class="ussd-btn" id="btn-ussd-submit">Send</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Diagnostic: active briefing packet generated -->
+          <div class="card">
+            <h2>Hunter Agent: SACCO Briefing</h2>
+            <div style="font-family: monospace; font-size:11.5px; background-color:#faf9f5; border:1px solid #d7ccc8; padding: 10px; max-height: 200px; overflow-y: auto;">
+              <pre id="dev-officer-briefing" style="white-space: pre-wrap; font-family: inherit;">Select a profile or fill out an application to view the briefing packet generated for the SACCO.</pre>
+            </div>
+          </div>
+
+          <!-- Diagnostic: human review flags & active support requests -->
+          <div class="card">
+            <h2>Guardian Triage: Human Review Queue</h2>
+            <div class="admin-list" id="dev-human-review-queue">
+              <!-- Populated from local storage queries -->
+            </div>
+          </div>
+
+          <!-- Diagnostic: bias comparison and fairness logs -->
+          <div class="card accent">
+            <h2>Fairness & Bias Watchdogs</h2>
+            <div style="font-size:12px; display:flex; flex-direction:column; gap:8px;" id="dev-bias-alerts">
+              <!-- Populated -->
+            </div>
+          </div>
+
+          <!-- Diagnostic: audit logs -->
+          <div class="card">
+            <h2>Session Activity & Audit Log</h2>
+            <div style="max-height: 150px; overflow-y: auto;">
+              <div class="admin-list" id="dev-audit-logs">
+                <!-- Populated -->
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-outline" id="btn-debug-back">
+            <span class="english-text">Back to Settings</span>
+            <span class="swahili-text">Rudi Kwenye Mipangilio</span>
+          </button>
         </section>
 
       </main>
@@ -719,22 +784,42 @@
       <!-- Bottom Nav Bar -->
       <footer class="phone-nav" id="bottom-nav" style="display: none;">
         <button class="nav-item active" id="nav-dash" onclick="app.router.navigate('dashboard')">
-          <span class="nav-icon">📊</span>
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </span>
           <span class="english-text">Dashboard</span>
           <span class="swahili-text">Mwanzo</span>
         </button>
         <button class="nav-item" id="nav-readiness" onclick="app.router.navigate('readiness-check')">
-          <span class="nav-icon">🧭</span>
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </span>
           <span class="english-text">Readiness</span>
           <span class="swahili-text">Utayari</span>
         </button>
         <button class="nav-item" id="nav-help" onclick="app.router.navigate('officer-contact')">
-          <span class="nav-icon">📞</span>
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </span>
           <span class="english-text">Get Help</span>
           <span class="swahili-text">Msaada</span>
         </button>
         <button class="nav-item" id="nav-settings" onclick="app.router.navigate('settings')">
-          <span class="nav-icon">⚙️</span>
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </span>
           <span class="english-text">Settings</span>
           <span class="swahili-text">Mipangilio</span>
         </button>
@@ -742,73 +827,7 @@
 
     </div>
 
-    <!-- Developer Diagnostic Panel and USSD Simulator -->
-    <div class="developer-workspace" id="dev-sidebar">
-      
-      <div class="dev-section-title">
-        <span>🛠️ Developer testing workspace</span>
-        <button class="lang-btn" id="toggle-ussd-btn" style="background-color:#3e2723; color:#fff; border-color:#8d6e63;">Hide USSD Sim</button>
-      </div>
-
-      <!-- Simulated USSD Interface -->
-      <div id="ussd-sim-container">
-        <h3 style="font-size: 13px; color:#5d4037; font-weight:bold; margin-bottom: 6px;">USSD *384*4# Feature Phone Simulator</h3>
-        <div class="ussd-wrapper">
-          <div class="ussd-screen" id="ussd-screen-text">
-            SokoRada - Karibu/Welcome
-            1. English
-            2. Kiswahili
-          </div>
-          <div class="ussd-input-row">
-            <span>&gt;</span>
-            <input type="text" class="ussd-input" id="ussd-user-input" placeholder="Enter option...">
-            <button class="ussd-btn" id="btn-ussd-submit">Send</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Diagnostic: active briefing packet generated -->
-      <div>
-        <h3 style="font-size:14px; font-weight:bold; margin-bottom:6px; color:#4e342e;">🏹 Hunter Agent: SACCO Officer Briefing Packet</h3>
-        <div class="card" style="font-family: monospace; font-size:12px; background-color:#faf9f5; border:1px solid #d7ccc8; max-height: 250px; overflow-y: auto;">
-          <pre id="dev-officer-briefing" style="white-space: pre-wrap;">Select a profile or fill out an application to view the briefing packet generated for the SACCO.</pre>
-        </div>
-      </div>
-
-      <!-- Diagnostic: human review flags & active support requests -->
-      <div>
-        <h3 style="font-size:14px; font-weight:bold; margin-bottom:6px; color:#4e342e;">🛡️ Guardian Triage: Human Review Queue</h3>
-        <div class="admin-list" id="dev-human-review-queue">
-          <!-- Populated from local storage queries -->
-        </div>
-      </div>
-
-      <!-- Diagnostic: bias comparison and fairness logs -->
-      <div>
-        <h3 style="font-size:14px; font-weight:bold; margin-bottom:6px; color:#4e342e;">⚖️ Fairness & Bias Watchdogs</h3>
-        <div class="card" style="background-color:#efebe9; border: 1px solid #d7ccc8;">
-          <div style="font-size:12px; display:flex; flex-direction:column; gap:8px;" id="dev-bias-alerts">
-            <!-- Populated -->
-          </div>
-        </div>
-      </div>
-
-      <!-- Diagnostic: audit logs -->
-      <div>
-        <h3 style="font-size:14px; font-weight:bold; margin-bottom:6px; color:#4e342e;">📋 Session Activity & Consent Audit Log</h3>
-        <div class="card" style="max-height: 200px; overflow-y: auto; background-color:#fff;">
-          <div class="admin-list" id="dev-audit-logs">
-            <!-- Populated -->
-          </div>
-        </div>
-      </div>
-
-    </div>
-
   </div>
-
-  <!-- Mobile Dev workspace toggler button -->
-  <button class="mobile-dev-toggle" id="mobile-dev-toggle-btn" style="display: none;">🛠️</button>
 
   <script src="mockData.js"></script>
   <script src="app.js"></script>
