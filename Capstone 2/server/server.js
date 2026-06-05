@@ -40,6 +40,11 @@ function checkHumanReviewFlag(u) {
 // CORE API ENDPOINTS
 // ----------------------------------------------------
 
+// Root Path Status Endpoint
+app.get("/", (req, res) => {
+  res.json({ success: true, message: "SokoRada Ethical Lending API Backend is running successfully!" });
+});
+
 // Retrieve Profile by Phone
 app.get("/api/profiles/:phone", async (req, res) => {
   try {
