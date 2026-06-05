@@ -120,8 +120,9 @@ class SokoRadaApp {
   }
 
   loadState() {
-    this.state.apiSyncActive = localStorage.getItem("apiSyncActive") === "true";
-    this.state.apiUrl = localStorage.getItem("apiUrl") || "";
+    const savedSync = localStorage.getItem("apiSyncActive");
+    this.state.apiSyncActive = savedSync === null ? true : savedSync === "true";
+    this.state.apiUrl = localStorage.getItem("apiUrl") || "https://plp-capstone-2026-1.onrender.com";
 
     const savedUser = localStorage.getItem("activeUser");
     if (savedUser) {
