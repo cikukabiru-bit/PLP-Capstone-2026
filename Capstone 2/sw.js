@@ -1,5 +1,5 @@
 // SokoRada Service Worker
-const CACHE_NAME = "sokorada-v1";
+const CACHE_NAME = "sokorada-v2";
 const ASSETS = [
   "./",
   "./index.html",

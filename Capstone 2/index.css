@@ -481,7 +481,7 @@ p {
   border: 1px solid var(--border-color);
 }
 
-.user-badge span {
+.user-badge-dot {
   display: inline-block;
   width: 8px;
   height: 8px;
